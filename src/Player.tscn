@@ -1,0 +1,156 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://assets/Hull_02.png" type="Texture" id=1]
+[ext_resource path="res://src/Player.gd" type="Script" id=2]
+[ext_resource path="res://src/Bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/Gun_07.png" type="Texture" id=4]
+[ext_resource path="res://assets/Track_3_B.png" type="Texture" id=5]
+[ext_resource path="res://assets/Track_3_A.png" type="Texture" id=6]
+[ext_resource path="res://assets/Flash_A_04.png" type="Texture" id=7]
+[ext_resource path="res://assets/effects/Explosion_G.png" type="Texture" id=8]
+[ext_resource path="res://assets/effects/Explosion_H.png" type="Texture" id=9]
+[ext_resource path="res://assets/effects/Explosion_B.png" type="Texture" id=10]
+[ext_resource path="res://assets/effects/Explosion_C.png" type="Texture" id=11]
+[ext_resource path="res://assets/effects/Explosion_A.png" type="Texture" id=12]
+[ext_resource path="res://assets/effects/Explosion_D.png" type="Texture" id=13]
+[ext_resource path="res://assets/effects/Explosion_E.png" type="Texture" id=14]
+[ext_resource path="res://assets/effects/Explosion_F.png" type="Texture" id=15]
+[ext_resource path="res://src/Smoke.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/effects/light (1).png" type="Texture" id=17]
+[ext_resource path="res://src/bomb_bullet.tscn" type="PackedScene" id=18]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ) ],
+"loop": true,
+"name": "working",
+"speed": 2.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 75, 44 )
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("turret/muzzleFlash:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0.935696, 0.792436 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "muzzle_flash"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("turret/muzzleFlash:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0.935696, 0.792436 ), Vector2( 1.49015, 1.43247 ), Vector2( 1.04041, 0.860827 ) ]
+}
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 12 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "explode",
+"speed": 5.0
+} ]
+
+[node name="Player" type="KinematicBody2D" groups=["player"]]
+position = Vector2( 106, 110 )
+collision_layer = 2
+collision_mask = 13
+script = ExtResource( 2 )
+Bullet = ExtResource( 3 )
+BombBullet = ExtResource( 18 )
+rotation_speed = 1.0
+gun_cooldown = 0.4
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 17 )
+texture_scale = 0.5
+
+[node name="track" type="AnimatedSprite" parent="."]
+position = Vector2( 17, -34 )
+scale = Vector2( 0.626016, 0.619047 )
+frames = SubResource( 2 )
+animation = "idle"
+speed_scale = 5.0
+
+[node name="track2" type="AnimatedSprite" parent="."]
+position = Vector2( 17, 36 )
+scale = Vector2( 0.626016, 0.619047 )
+frames = SubResource( 2 )
+animation = "idle"
+speed_scale = 5.0
+
+[node name="body" type="Sprite" parent="."]
+position = Vector2( 16, 1 )
+scale = Vector2( 0.595703, 0.515768 )
+texture = ExtResource( 1 )
+region_rect = Rect2( 168.515, 129.365, 38.6974, 41.6869 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 16, 1 )
+shape = SubResource( 1 )
+
+[node name="turret" type="Sprite" parent="."]
+position = Vector2( 2, 1 )
+scale = Vector2( 0.687787, 0.648372 )
+texture = ExtResource( 4 )
+offset = Vector2( 60, 0 )
+region_rect = Rect2( 290.416, 30.2351, 29.3008, 11.4376 )
+
+[node name="muzzle" type="Position2D" parent="turret"]
+position = Vector2( 200.986, 0 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="muzzleFlash" type="Sprite" parent="turret"]
+visible = false
+position = Vector2( 184.65, 0 )
+scale = Vector2( 0.935696, 0.792436 )
+texture = ExtResource( 7 )
+
+[node name="GunTimer" type="Timer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 1.8, 2 )
+limit_left = 0
+limit_top = 0
+limit_right = 2080
+limit_bottom = 1385
+smoothing_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/muzzle_flash = SubResource( 4 )
+
+[node name="explosion" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 11, 0 )
+frames = SubResource( 5 )
+animation = "explode"
+speed_scale = 2.0
+
+[node name="Smoke" parent="." instance=ExtResource( 16 )]
+visible = false
+position = Vector2( -34, 0 )

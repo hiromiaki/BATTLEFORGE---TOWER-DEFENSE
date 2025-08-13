@@ -1,0 +1,128 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://src/HUD.gd" type="Script" id=1]
+[ext_resource path="res://assets/font/WesternBangBang-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/UI/shop.png" type="Texture" id=3]
+[ext_resource path="res://assets/UI/healthbar.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+expand_margin_left = 1.0
+expand_margin_right = 1.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+shadow_offset = Vector2( 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 1, 1, 1, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.768627, 0.101961, 0.184314, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="DynamicFont" id=5]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 1, 0.964706, 0.964706, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0.0627451, 1, 1 )
+corner_radius_top_left = 9
+corner_radius_top_right = 9
+corner_radius_bottom_right = 9
+corner_radius_bottom_left = 9
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 1 )
+
+[node name="Healthbar2" type="Sprite" parent="."]
+position = Vector2( 209, 98.625 )
+scale = Vector2( 5.77778, 3.19643 )
+texture = ExtResource( 4 )
+
+[node name="Healthbar" type="Sprite" parent="."]
+position = Vector2( 209, 59 )
+scale = Vector2( 5.78175, 4.57143 )
+texture = ExtResource( 4 )
+
+[node name="damageBar" type="ProgressBar" parent="."]
+margin_left = 53.0
+margin_top = 43.0
+margin_right = 365.0
+margin_bottom = 74.0
+custom_styles/fg = SubResource( 1 )
+custom_styles/bg = SubResource( 2 )
+value = 100.0
+percent_visible = false
+
+[node name="healthBar" type="ProgressBar" parent="."]
+margin_left = 53.0
+margin_top = 43.0
+margin_right = 365.0
+margin_bottom = 74.0
+custom_styles/fg = SubResource( 3 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+percent_visible = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="coinLabel" type="Label" parent="."]
+margin_left = 114.0
+margin_top = 136.0
+margin_right = 268.0
+margin_bottom = 174.0
+rect_scale = Vector2( 1, 0.979071 )
+custom_fonts/font = SubResource( 5 )
+text = "COINS:"
+
+[node name="shop-btn" type="TextureButton" parent="."]
+margin_left = 42.0
+margin_top = 123.0
+margin_right = 106.0
+margin_bottom = 183.0
+texture_normal = ExtResource( 3 )
+expand = true
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+margin_left = 50.0
+margin_top = 88.0
+margin_right = 368.0
+margin_bottom = 111.0
+custom_styles/bg = SubResource( 6 )
+percent_visible = false
+
+[node name="towerHealth" type="ProgressBar" parent="."]
+margin_left = 51.0
+margin_top = 89.0
+margin_right = 367.0
+margin_bottom = 110.0
+custom_styles/fg = SubResource( 7 )
+custom_styles/bg = SubResource( 4 )
+value = 100.0
+percent_visible = false
+
+[connection signal="shop_opened" from="." to="." method="_on_ShopButton_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="shop-btn" to="." method="_on_ShopButton_pressed"]
