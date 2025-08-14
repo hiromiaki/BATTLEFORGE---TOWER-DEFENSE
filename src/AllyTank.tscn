@@ -71,6 +71,7 @@ animations = [ {
 } ]
 
 [node name="AllyTank" type="KinematicBody2D" groups=["allytank"]]
+z_index = 1
 collision_layer = 2
 collision_mask = 15
 script = ExtResource( 6 )
@@ -113,7 +114,7 @@ position = Vector2( 146.667, 0 )
 
 [node name="muzzleFlash" type="Sprite" parent="turret"]
 visible = false
-position = Vector2( 148.762, 0 )
+position = Vector2( 167.619, -2 )
 scale = Vector2( 0.456473, 0.402344 )
 texture = ExtResource( 5 )
 

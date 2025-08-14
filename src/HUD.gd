@@ -7,7 +7,7 @@ onready var timer = $Timer
 onready var health_bar = $healthBar
 onready var damage_bar = $damageBar
 var health = 0
-var max_value = 100  
+var max_value = 200  
 
 var is_opening_shop := false  
 

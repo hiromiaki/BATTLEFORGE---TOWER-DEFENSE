@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://assets/UI/UI_TravelBook_Select01a.png" type="Texture" id=1]
 [ext_resource path="res://assets/UI/UI_TravelBook_Fill01b.png" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://assets/UI/RightArrowButton_7x10.png" type="Texture" id=22]
 [ext_resource path="res://assets/UI/UI_TravelBook_Popup01a.png" type="Texture" id=23]
 [ext_resource path="res://assets/font/Wrong time, wrong place.ttf" type="DynamicFontData" id=24]
+[ext_resource path="res://assets/sound/048. Buy Mode.mp3" type="AudioStream" id=25]
 
 [sub_resource type="DynamicFont" id=1]
 size = 45
@@ -131,7 +132,7 @@ scale = Vector2( 6.0625, 5.50833 )
 texture = ExtResource( 7 )
 
 [node name="UiTravelBookSelect01a" type="Sprite" parent="ui"]
-position = Vector2( 370.5, 258.5 )
+position = Vector2( 369.5, 259.5 )
 scale = Vector2( 6.76667, 6.03333 )
 texture = ExtResource( 1 )
 
@@ -208,7 +209,7 @@ margin_right = 451.0
 margin_bottom = 420.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "BUY for 20 coins"
+text = "BUY for 10 coins"
 align = 1
 autowrap = true
 
@@ -228,7 +229,7 @@ margin_right = 758.0
 margin_bottom = 419.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_fonts/font = SubResource( 2 )
-text = "BUY for 30 coins"
+text = "BUY for 25 coins"
 align = 1
 autowrap = true
 
@@ -271,6 +272,9 @@ autowrap = true
 anims/RESET = SubResource( 7 )
 anims/aly_rotate = SubResource( 9 )
 anims/tank_speed = SubResource( 8 )
+
+[node name="buy-sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 25 )
 
 [connection signal="pressed" from="allies_button" to="." method="_on_buy_ally"]
 [connection signal="pressed" from="bomb_button" to="." method="_on_buy_bomb"]

@@ -4,7 +4,7 @@ var bullet_scene = preload("res://src/EnemyBullet.tscn")
 var CoinScene = preload("res://src/Coin.tscn")
 
 export var fire_interval := 1.5
-export var health := 100
+export var health := 150
 export var speed := 80
 export var wander_interval := 2.0
 export var rotation_speed := 2.0
@@ -18,7 +18,6 @@ onready var turret = $turret
 onready var muzzle = $turret/muzzle
 onready var detection_area = $DetectionArea
 onready var muzzle_flash = $turret/muzzleFlash
-onready var anim_player = $AnimationPlayer
 onready var track = $AnimatedSprite
 onready var track2 = $AnimatedSprite2
 onready var explosion = $explosion
@@ -40,16 +39,22 @@ func _ready():
 
 func _process(delta):
 	if is_instance_valid(target_ref):
+		# Attack player or allytank
 		_chase_target(delta, target_ref)
 		_smooth_aim_turret_at_target(delta, target_ref)
-		_handle_shooting(delta)
+		if target_ref.is_in_group("player") or target_ref.is_in_group("allytank"):
+			_handle_shooting(delta)
 	elif is_instance_valid(tower_ref):
+		# Move toward tower always, but only shoot if close enough
 		_chase_target(delta, tower_ref)
 		_smooth_aim_turret_at_target(delta, tower_ref)
-		_handle_shooting(delta)
+		if global_position.distance_to(tower_ref.global_position) <= attack_distance:
+			_handle_shooting(delta)
 	else:
+		# No targets — wander
 		_tank_like_wander(delta)
 		_random_turret_rotation(delta)
+
 
 # --- Movement with spacing ---
 func _chase_target(delta, target):
@@ -91,12 +96,11 @@ func _shoot_bullet():
 	bullet.direction = turret.global_transform.x.normalized()
 	
 	show_muzzle_flash()
-	if anim_player.has_animation("muzzle_flash"):
-		anim_player.play("muzzle_flash")
 
 func show_muzzle_flash():
 	muzzle_flash.visible = true
-	yield(get_tree().create_timer(0.1), "timeout")
+	muzzle_flash.play("fire")
+	yield(get_tree().create_timer(0.5), "timeout")
 	muzzle_flash.visible = false
 
 # --- Detection ---
@@ -127,7 +131,7 @@ func _random_turret_rotation(delta):
 	turret.rotation += random_angle * delta * 0.5
 
 # --- Damage ---
-func take_damage(damage := 40):
+func take_damage(damage := 20):
 	health -= damage
 	if health < 0:
 		health = 0

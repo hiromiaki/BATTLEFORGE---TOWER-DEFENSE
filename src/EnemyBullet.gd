@@ -2,7 +2,7 @@ extends Area2D
 
 export var speed := 400
 export var life_time := 0.6
-export var damage := 20  # Damage dealt per hit
+export var damage := 10  # Damage dealt per hit
 var direction: Vector2 = Vector2.RIGHT
 
 onready var timer: Timer = $Timer

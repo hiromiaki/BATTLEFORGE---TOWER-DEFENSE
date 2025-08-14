@@ -1,7 +1,9 @@
 extends Node2D
 
 export (PackedScene) var enemy_scene
-export var base_enemies_per_wave := 3
+export (PackedScene) var repair_scene
+
+export var base_enemies_per_wave := 5
 export var time_between_waves := 5.0
 
 var current_wave := 0
@@ -9,13 +11,19 @@ var enemies_alive := 0
 var spawning := false
 var spawn_points = []
 
-
 # === HUD ===
 onready var wave_countdown = $HUD/WaveCountdown
 onready var enemies_alive_label = $HUD/EnemiesAlive
 onready var hud = $HUD2
 onready var shop_ui = $ShopUI
 
+#=== Repair ===
+onready var repair_timer = $RepairTimer
+var active_repair = null
+
+# === sound ===
+onready var train_sound = $train/Node2D/Path2D/PathFollow2D/StaticBody2D/AudioStreamPlayer2D
+onready var sfx_voice = $"sfx-voice"
 
 func _ready():
 	randomize()
@@ -35,7 +43,7 @@ func _ready():
 	$Player.connect("shoot", self, "_on_Player_shoot")
 	
 	hud.connect("shop_opened", self, "_on_ShopOpened")
-	$Tower.connect("tower_health_changed", $HUD2, "_on_tower_health_changed")
+	train_sound.play()
 
 func _on_ShopOpened():
 	shop_ui.visible = true
@@ -51,11 +59,12 @@ func set_camera_limits():
 
 func start_next_wave():
 	current_wave += 1
-	var enemies_this_wave = base_enemies_per_wave + current_wave - 1
+	var enemies_this_wave = base_enemies_per_wave 
 	spawn_wave(enemies_this_wave)
 
 func spawn_wave(count):
 	spawning = true
+	sfx_voice.play()
 	for i in range(count):
 		yield(get_tree().create_timer(0.5), "timeout")
 		spawn_enemy()
@@ -81,7 +90,6 @@ func spawn_enemy():
 	# Connect to signal when enemy dies or is removed
 	if not enemy.is_connected("tree_exited", self, "_on_enemy_died"):
 		enemy.connect("tree_exited", self, "_on_enemy_died")
-
 
 func _on_enemy_died():
 	enemies_alive -= 1
@@ -115,3 +123,27 @@ func _on_Player_shoot(bullet_scene, spawn_position, direction):
 	bullet.global_position = spawn_position
 	bullet.direction = direction
 	add_child(bullet)
+
+
+func _on_RepairTimer_timeout():
+	
+	if is_instance_valid(active_repair):
+		return
+
+	var spawn_points = get_tree().get_nodes_in_group("repair_spawns")
+	if spawn_points.empty():
+		print("No potion spawn points!")
+		return
+
+	var spawn_point = spawn_points[randi() % spawn_points.size()]
+	var repair = repair_scene.instance()
+	repair.position = spawn_point.global_position
+	add_child(repair)
+
+	active_repair = repair
+
+	if repair.has_signal("tree_exited"):
+		repair.connect("tree_exited", self, "_on_repair_disappeared")
+
+func _on_repair_disappeared():
+	active_repair = null

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/072. Comet Boom.mp3-7e0f55db5acfb340dca1e8f60f1dca02.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/072. Comet Boom.mp3"
+dest_files=[ "res://.import/072. Comet Boom.mp3-7e0f55db5acfb340dca1e8f60f1dca02.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,11 +1,11 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/EnemyTank.gd" type="Script" id=1]
 [ext_resource path="res://assets/Gun_03.png" type="Texture" id=2]
 [ext_resource path="res://assets/Hull_06.png" type="Texture" id=3]
 [ext_resource path="res://assets/Track_2_A.png" type="Texture" id=4]
 [ext_resource path="res://assets/Track_2_B.png" type="Texture" id=5]
-[ext_resource path="res://assets/Flash_A_04.png" type="Texture" id=6]
+[ext_resource path="res://assets/effects/Flash_B_01.png" type="Texture" id=6]
 [ext_resource path="res://assets/effects/Explosion_G.png" type="Texture" id=7]
 [ext_resource path="res://assets/effects/Explosion_H.png" type="Texture" id=8]
 [ext_resource path="res://assets/effects/Explosion_B.png" type="Texture" id=9]
@@ -16,6 +16,9 @@
 [ext_resource path="res://assets/effects/Explosion_F.png" type="Texture" id=14]
 [ext_resource path="res://src/Smoke.tscn" type="PackedScene" id=15]
 [ext_resource path="res://assets/effects/light (1).png" type="Texture" id=16]
+[ext_resource path="res://assets/effects/Flash_B_02.png" type="Texture" id=17]
+[ext_resource path="res://assets/effects/Flash_B_03.png" type="Texture" id=18]
+[ext_resource path="res://assets/effects/light.jpg" type="Texture" id=19]
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -28,39 +31,16 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 74, 37.5 )
 
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "fire",
+"speed": 5.0
+} ]
+
 [sub_resource type="CircleShape2D" id=2]
 radius = 322.002
-
-[sub_resource type="Animation" id=4]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("turret/muzzleFlash:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0.528742, 0.51227 ) ]
-}
-
-[sub_resource type="Animation" id=5]
-resource_name = "muzzle_flash"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("turret/muzzleFlash:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
-"transitions": PoolRealArray( 1, 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0.528742, 0.51227 ), Vector2( 1.18042, 0.993481 ), Vector2( 0.668854, 0.562742 ) ]
-}
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
@@ -118,21 +98,26 @@ region_rect = Rect2( 332.682, 29.0119, 32.7706, 13.8793 )
 [node name="muzzle" type="Position2D" parent="turret"]
 position = Vector2( 155.923, 1.16637 )
 
-[node name="muzzleFlash" type="Sprite" parent="turret"]
+[node name="muzzleFlash" type="AnimatedSprite" parent="turret"]
 visible = false
-position = Vector2( 160.648, -5.96046e-07 )
-scale = Vector2( 0.528742, 0.51227 )
-texture = ExtResource( 6 )
+position = Vector2( 188.997, -1.16637 )
+scale = Vector2( 0.923584, 0.840852 )
+frames = SubResource( 7 )
+animation = "fire"
+frame = 2
+
+[node name="Light2D" type="Light2D" parent="turret/muzzleFlash"]
+position = Vector2( 83.2274, 3.8369 )
+rotation = -1.5708
+texture = ExtResource( 19 )
+texture_scale = 0.9
+color = Color( 1, 0.00392157, 0.00392157, 1 )
 
 [node name="DetectionArea" type="Area2D" parent="."]
 visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource( 2 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 4 )
-anims/muzzle_flash = SubResource( 5 )
 
 [node name="explosion" type="AnimatedSprite" parent="."]
 visible = false
@@ -146,6 +131,8 @@ speed_scale = 3.0
 [node name="Smoke" parent="." instance=ExtResource( 15 )]
 visible = false
 position = Vector2( -62, -3 )
+
+[node name="shoot-sfx" type="AudioStreamPlayer" parent="."]
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]

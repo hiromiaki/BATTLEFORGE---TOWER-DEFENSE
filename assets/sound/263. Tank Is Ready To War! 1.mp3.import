@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/263. Tank Is Ready To War! 1.mp3-3cf98639046acdceaaab25bb079cb870.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/263. Tank Is Ready To War! 1.mp3"
+dest_files=[ "res://.import/263. Tank Is Ready To War! 1.mp3-3cf98639046acdceaaab25bb079cb870.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

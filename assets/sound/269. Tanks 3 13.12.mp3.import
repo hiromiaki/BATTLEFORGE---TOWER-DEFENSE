@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/269. Tanks 3 13.12.mp3-37d68ff78d1e9f7e9816e179ab18d18b.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/269. Tanks 3 13.12.mp3"
+dest_files=[ "res://.import/269. Tanks 3 13.12.mp3-37d68ff78d1e9f7e9816e179ab18d18b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

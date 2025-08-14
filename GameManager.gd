@@ -50,6 +50,24 @@ func spawn_ally():
 
 func buy_bomb_bullets():
 	bomb_bullets_enabled = true
-	bomb_bullet_ammo += 3  
+	bomb_bullet_ammo += 9  
 	emit_signal("coins_updated", coins)
 	print("Bomb bullets purchased! Current ammo: %d" % bomb_bullet_ammo)
+
+func coins_label():
+	emit_signal("coins_update", coins)
+
+# === Reset function for new game ===
+func reset():
+	coins = 0
+	wave_number = 1
+	enemies_alive = 0
+	is_wave_active = false
+	is_game_over = false
+	player = null
+
+	bomb_bullets_enabled = false
+	bomb_bullet_ammo = 0
+
+	emit_signal("coins_updated", coins)
+	print("Game variables have been reset!")

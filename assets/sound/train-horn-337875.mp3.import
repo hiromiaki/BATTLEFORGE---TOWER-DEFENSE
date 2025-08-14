@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/train-horn-337875.mp3-2ff5b54e7a9040c52724b4a0cc2d900b.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/train-horn-337875.mp3"
+dest_files=[ "res://.import/train-horn-337875.mp3-2ff5b54e7a9040c52724b4a0cc2d900b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

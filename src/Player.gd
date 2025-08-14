@@ -11,7 +11,7 @@ export (PackedScene) var BombBullet
 export (int) var base_speed := 200
 export (float) var rotation_speed := 2.0
 export (float) var gun_cooldown := 0.5
-export (int) var maxHealth := 100
+export (int) var maxHealth := 200
 
 # === Internal Variables ===
 var velocity = Vector2()
@@ -24,7 +24,6 @@ onready var gun_timer = $GunTimer
 onready var turret = $turret
 onready var muzzle = $turret/muzzle
 onready var muzzle_flash = $turret/muzzleFlash
-onready var anim_player = $AnimationPlayer
 onready var track = $track
 onready var track_2 = $track2
 onready var health_ui = $"../HUD2"
@@ -32,7 +31,10 @@ onready var explosion = $explosion
 onready var smoke = $Smoke
 onready var screenfade_player = $"../HUD/ScreenFade/AnimationPlayer"
 onready var game_over = $"../GameOver"
-
+onready var shoot_sfx = $"shoot-sfx"
+onready var movement_sfx = $"movement-sfx"
+onready var idle_sfx = $"idle-sfx"
+onready var bomb_sfx = $"bomb-sfx"
 
 func _ready():
 	currentHealth = maxHealth
@@ -75,14 +77,17 @@ func handle_input(delta):
 	velocity = Vector2.ZERO
 	var current_speed = base_speed
 	if Input.is_action_pressed("forward"):
+		idle_sfx.play()
 		track.play("working")
 		track_2.play("working")
 		velocity = Vector2(current_speed, 0).rotated(rotation)
 	elif Input.is_action_pressed("back"):
+		idle_sfx.play()
 		track.play("working")
 		track_2.play("working")
 		velocity = Vector2(-current_speed / 2, 0).rotated(rotation)
 	else:
+		movement_sfx.play()
 		track.play("idle")
 		track_2.play("idle")
 
@@ -93,7 +98,8 @@ func shoot_bullet():
 
 	can_shoot = false
 	gun_timer.start()
-
+	
+	shoot_sfx.play()
 	var direction = Vector2.RIGHT.rotated(turret.global_rotation)
 	var spawn_pos = muzzle.global_position
 
@@ -103,6 +109,7 @@ func shoot_bullet():
 	# Bomb bullet mode
 	if GameManager.bomb_bullets_enabled and GameManager.bomb_bullet_ammo > 0:
 		if BombBullet != null:
+			bomb_sfx.play()
 			emit_signal("shoot", BombBullet, spawn_pos, direction)
 			GameManager.bomb_bullet_ammo -= 1
 			print("Bomb bullet fired. Remaining: ", GameManager.bomb_bullet_ammo)
@@ -114,7 +121,8 @@ func shoot_bullet():
 
 func show_muzzle_flash():
 	muzzle_flash.visible = true
-	yield(get_tree().create_timer(0.1), "timeout")
+	muzzle_flash.play("fire")
+	yield(get_tree().create_timer(0.5), "timeout")
 	muzzle_flash.visible = false
 
 func _on_GunTimer_timeout():
@@ -137,8 +145,21 @@ func take_damage(amount = 20):
 	if currentHealth <= 0:
 		die()
 
+func heal(amount):
+	if not alive:
+		return
+
+	currentHealth += amount
+	currentHealth = clamp(currentHealth, 0, maxHealth)
+	emit_signal("health_changed", currentHealth)
+
+	if health_ui.has_method("set_health"):
+		health_ui.call("set_health", currentHealth)
+
+	_update_smoke_visibility()
+
 func _update_smoke_visibility():
-	smoke.visible = currentHealth <= 20
+	smoke.visible = currentHealth <= 60
 
 func die():
 	if not alive:

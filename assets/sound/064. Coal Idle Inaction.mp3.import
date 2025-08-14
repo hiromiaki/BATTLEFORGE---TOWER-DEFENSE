@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/064. Coal Idle Inaction.mp3-58b67c7134d6dcc7e267e4b3aa1702de.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/064. Coal Idle Inaction.mp3"
+dest_files=[ "res://.import/064. Coal Idle Inaction.mp3-58b67c7134d6dcc7e267e4b3aa1702de.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

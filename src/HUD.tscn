@@ -71,7 +71,8 @@ margin_right = 365.0
 margin_bottom = 74.0
 custom_styles/fg = SubResource( 1 )
 custom_styles/bg = SubResource( 2 )
-value = 100.0
+max_value = 200.0
+value = 200.0
 percent_visible = false
 
 [node name="healthBar" type="ProgressBar" parent="."]
@@ -81,7 +82,8 @@ margin_right = 365.0
 margin_bottom = 74.0
 custom_styles/fg = SubResource( 3 )
 custom_styles/bg = SubResource( 4 )
-value = 100.0
+max_value = 200.0
+value = 200.0
 percent_visible = false
 
 [node name="Timer" type="Timer" parent="."]
@@ -120,7 +122,8 @@ margin_right = 367.0
 margin_bottom = 110.0
 custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 4 )
-value = 100.0
+max_value = 500.0
+value = 500.0
 percent_visible = false
 
 [connection signal="shop_opened" from="." to="." method="_on_ShopButton_pressed"]

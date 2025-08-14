@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/022. Before Airstrike 8.mp3-e2a9358d3d1cf3423bd424b1996ca098.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/022. Before Airstrike 8.mp3"
+dest_files=[ "res://.import/022. Before Airstrike 8.mp3-e2a9358d3d1cf3423bd424b1996ca098.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

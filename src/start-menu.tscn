@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/map.png" type="Texture" id=1]
 [ext_resource path="res://assets/effects/light (1).png" type="Texture" id=2]
@@ -9,8 +9,8 @@
 [ext_resource path="res://assets/torch_4.png" type="Texture" id=7]
 [ext_resource path="res://assets/torch_2.png" type="Texture" id=8]
 [ext_resource path="res://src/start-menu.gd" type="Script" id=9]
-[ext_resource path="res://src/PathFollow2D.gd" type="Script" id=11]
-[ext_resource path="res://assets/upgrades/ally.png" type="Texture" id=12]
+[ext_resource path="res://assets/sound/269. Tanks 3 13.12.mp3" type="AudioStream" id=10]
+[ext_resource path="res://assets/sound/047. Button Press.mp3" type="AudioStream" id=11]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -75,11 +75,6 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="Curve2D" id=6]
-_data = {
-"points": PoolVector2Array( 0, 0, 0, 0, 1048, 463, 16.856, 5.24408, -16.856, -5.24408, 954, 462, 0, 0, 0, 0, 888, 428, 28.0316, 7.34162, -28.0316, -7.34162, 814, 380, 17.3529, 1.33484, -17.3529, -1.33484, 733, 360, 13.3484, 0, -13.3484, 0, 667, 356, 1.33484, 28.0316, -1.33484, -28.0316, 592, 353, 0, 0, 0, 0, 580, 302, -33.371, 28.0316, 33.371, -28.0316, 571, 230, -16.6855, 0.66742, 16.6855, -0.66742, 664, 240, -17.3529, 3.3371, 17.3529, -3.3371, 729, 203, -4.00452, -0.66742, 4.00452, 0.66742, 815, 213, 0, 0, 0, 0, 887, 248, -6.6742, -16.0181, 6.6742, 16.0181, 957, 300, 4.67194, -13.3484, -4.67194, 13.3484, 956, 367, 0, 0, 0, 0, 909, 413, 0, 0, 0, 0, 864, 444, 24.6945, 0.33371, -24.6945, -0.33371, 790, 472, 0, 0, 0, 0, 679, 452, 0, 0, 0, 0, 585, 435, 17.3529, 16.6855, -17.3529, -16.6855, 462, 429, 0, 0, 0, 0, 450, 342, 0, 0, 0, 0, 450, 241, 15.3507, 24.0271, -15.3507, -24.0271, 460, 149, 0, 0, 0, 0, 378, 140, 0, 0, 0, 0, 288, 133, 13.435, -3.53553, -13.435, 3.53553, 215, 140, 0, 0, 0, 0, 165, 176, -7.34162, 5.33936, 7.34162, -5.33936, 93, 227, 12.681, -10.0113, -12.681, 10.0113, 63, 261, 8.4757, -25.4271, -8.4757, 25.4271, -60, 309, 3.17839, -19.0703, -3.17839, 19.0703, -72, 463, -6.3496, -34.9228, 6.3496, 34.9228, -80, 541, 0, 0, 0, 0, -48, 673, 0, 0, 0, 0, 107, 662, 0, 0, 0, 0, 405, 678, 0, 0, 0, 0, 1083, 669, 0, 0, 0, 0, 1075, 469, 0, 0, 0, 0, 1048, 463 )
-}
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -170,22 +165,6 @@ color = Color( 0.92549, 0.952941, 0.419608, 1 )
 energy = 0.5
 shadow_enabled = true
 
-[node name="Node2D" type="Node2D" parent="."]
-
-[node name="Path2D" type="Path2D" parent="Node2D"]
-curve = SubResource( 6 )
-
-[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/Path2D"]
-position = Vector2( 1080.27, 600.738 )
-rotation = -1.61075
-offset = 4088.6
-script = ExtResource( 11 )
-
-[node name="Sprite" type="Sprite" parent="Node2D/Path2D/PathFollow2D"]
-position = Vector2( 0.0332031, 0.149841 )
-scale = Vector2( 0.193093, 0.185092 )
-texture = ExtResource( 12 )
-
 [node name="title" type="Label" parent="."]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -209,5 +188,13 @@ pressed = true
 text = "START"
 flat = true
 clip_text = true
+
+[node name="bg-music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -10.0
+
+[node name="button-pressed" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = 5.0
 
 [connection signal="pressed" from="start-button" to="." method="_on_startbutton_pressed"]

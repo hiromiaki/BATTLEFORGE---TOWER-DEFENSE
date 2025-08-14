@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/048. Buy Mode.mp3-d82fbf19fde56f3dd1e84c7527087d57.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/048. Buy Mode.mp3"
+dest_files=[ "res://.import/048. Buy Mode.mp3-d82fbf19fde56f3dd1e84c7527087d57.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://assets/terrainTiles_retina.png" type="Texture" id=1]
 [ext_resource path="res://src/Player.tscn" type="PackedScene" id=2]
@@ -12,12 +12,19 @@
 [ext_resource path="res://assets/font/WesternBangBang-Regular.ttf" type="DynamicFontData" id=10]
 [ext_resource path="res://src/Tower.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/AllyTank.tscn" type="PackedScene" id=12]
-[ext_resource path="res://assets/map.png" type="Texture" id=13]
+[ext_resource path="res://assets/add ons/Frait train assets.png" type="Texture" id=13]
 [ext_resource path="res://assets/effects/light (1).png" type="Texture" id=14]
 [ext_resource path="res://src/GameOver.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/EnemyTower.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/WinUI.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/AnimatedCursor.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/repair.tscn" type="PackedScene" id=19]
+[ext_resource path="res://assets/map-removed.png" type="Texture" id=20]
+[ext_resource path="res://src/PathFollow2D.gd" type="Script" id=21]
+[ext_resource path="res://src/killzone.gd" type="Script" id=22]
+[ext_resource path="res://assets/effects/light.jpg" type="Texture" id=23]
+[ext_resource path="res://assets/sound/train-horn-337875.mp3" type="AudioStream" id=24]
+[ext_resource path="res://assets/sound/022. Before Airstrike 8.mp3" type="AudioStream" id=25]
 
 [sub_resource type="TileSet" id=1]
 0/name = "terrainTiles_retina.png 0"
@@ -730,9 +737,6 @@ extents = Vector2( 51.25, 804 )
 [sub_resource type="CircleShape2D" id=23]
 radius = 55.0091
 
-[sub_resource type="RectangleShape2D" id=24]
-extents = Vector2( 10.5, 173 )
-
 [sub_resource type="DynamicFont" id=2]
 size = 50
 font_data = ExtResource( 10 )
@@ -771,9 +775,21 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Curve2D" id=25]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 904, 603, 0, 0, 0, 0, 902, 1197, 0, 0, 0, 0, 863, 4330, 0, 0, 0, 0, 3266, 4305, 0, 0, 0, 0, 3474, 2433, 0, 0, 0, 0, 3490, -607, 0, 0, 0, 0, 3466, -2663, 0, 0, 0, 0, 889, -2602, 0, 0, 0, 0, 889, -1283, 0, 0, 0, 0, 900, -538, 0, 0, 0, 0, 904, 601 )
+}
+
+[sub_resource type="RectangleShape2D" id=26]
+extents = Vector2( 1124, 48.0006 )
+
+[sub_resource type="RectangleShape2D" id=27]
+extents = Vector2( 45.5193, 49.5085 )
+
 [node name="main" type="Node2D"]
 script = ExtResource( 3 )
 enemy_scene = ExtResource( 4 )
+repair_scene = ExtResource( 19 )
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.133333, 0.133333, 0.133333, 1 )
@@ -781,15 +797,7 @@ color = Color( 0.133333, 0.133333, 0.133333, 1 )
 [node name="Map1" type="Sprite" parent="."]
 position = Vector2( 1033, 706 )
 scale = Vector2( 1.36625, 1.41455 )
-texture = ExtResource( 13 )
-
-[node name="Sprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 545, 1008.25 )
-scale = Vector2( 1.74869, 1.97208 )
-texture = ExtResource( 13 )
-region_enabled = true
-region_rect = Rect2( 125.437, 409.587, 191.9, 197.6 )
+texture = ExtResource( 20 )
 
 [node name="Ground" type="TileMap" parent="."]
 scale = Vector2( 3, 3 )
@@ -798,22 +806,37 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 545, 618 )
+position = Vector2( 311, 668 )
 z_index = 1
 
 [node name="EnemySpawner" type="Node" parent="."]
 
 [node name="Position2D" type="Position2D" parent="EnemySpawner"]
-position = Vector2( 1528, 572 )
+position = Vector2( 1267, 673 )
 
 [node name="Position2D2" type="Position2D" parent="EnemySpawner"]
-position = Vector2( 1802, 889 )
+position = Vector2( 1808, 1053 )
 
 [node name="Position2D3" type="Position2D" parent="EnemySpawner"]
-position = Vector2( 1522, 778 )
+position = Vector2( 1509, 1120 )
 
 [node name="Position2D4" type="Position2D" parent="EnemySpawner"]
-position = Vector2( 1925, 726 )
+position = Vector2( 1946, 745 )
+
+[node name="RepairSpawner" type="Node" parent="."]
+
+[node name="Position2D" type="Position2D" parent="RepairSpawner" groups=["repair_spawns"]]
+position = Vector2( 703, 996 )
+
+[node name="Position2D2" type="Position2D" parent="RepairSpawner" groups=["repair_spawns"]]
+position = Vector2( 627, 344 )
+
+[node name="Position2D3" type="Position2D" parent="RepairSpawner" groups=["repair_spawns"]]
+position = Vector2( 148, 698 )
+
+[node name="RepairTimer" type="Timer" parent="."]
+wait_time = 20.0
+autostart = true
 
 [node name="lights" type="Node" parent="."]
 
@@ -864,7 +887,7 @@ energy = 0.9
 shadow_enabled = true
 
 [node name="Light2D7" type="Light2D" parent="lights"]
-position = Vector2( 169, 861 )
+position = Vector2( 187, 906 )
 texture = ExtResource( 14 )
 texture_scale = 0.8
 color = Color( 0.92549, 0.952941, 0.419608, 1 )
@@ -872,7 +895,7 @@ energy = 0.9
 shadow_enabled = true
 
 [node name="Light2D8" type="Light2D" parent="lights"]
-position = Vector2( 326, 945 )
+position = Vector2( 353, 1005 )
 texture = ExtResource( 14 )
 texture_scale = 0.8
 color = Color( 0.92549, 0.952941, 0.419608, 1 )
@@ -880,7 +903,7 @@ energy = 0.9
 shadow_enabled = true
 
 [node name="Light2D9" type="Light2D" parent="lights"]
-position = Vector2( 1845, 315 )
+position = Vector2( 1596, 328 )
 scale = Vector2( 1.58008, 1.48242 )
 texture = ExtResource( 14 )
 texture_scale = 0.8
@@ -961,25 +984,18 @@ shape = SubResource( 20 )
 position = Vector2( 1128, 1095 )
 shape = SubResource( 23 )
 
-[node name="CollisionShape2D21" type="CollisionShape2D" parent="collisions"]
-position = Vector2( 835.5, 1261 )
-shape = SubResource( 24 )
-
-[node name="CollisionShape2D22" type="CollisionShape2D" parent="collisions"]
-position = Vector2( 968, 1264 )
-shape = SubResource( 24 )
-
 [node name="Coin" parent="." instance=ExtResource( 9 )]
 position = Vector2( 644, 453 )
 
 [node name="Tower" parent="." instance=ExtResource( 11 )]
-position = Vector2( 218, 951 )
+position = Vector2( 300, 987 )
 scale = Vector2( 1.24, 1.34198 )
 
 [node name="AllyTank" parent="." instance=ExtResource( 12 )]
 position = Vector2( 492, 422 )
 
 [node name="HUD" type="CanvasLayer" parent="."]
+visible = false
 
 [node name="WaveCountdown" type="Label" parent="HUD"]
 margin_left = 307.0
@@ -1018,7 +1034,102 @@ visible = false
 visible = false
 
 [node name="EnemyTower" parent="." instance=ExtResource( 16 )]
-position = Vector2( 1800, 373 )
+position = Vector2( 1549, 457 )
 
 [node name="WinUI" parent="." instance=ExtResource( 17 )]
 visible = false
+
+[node name="train" type="Node" parent="."]
+
+[node name="Sprite" type="Sprite" parent="train"]
+position = Vector2( 902.624, 1108.82 )
+rotation = 1.5708
+scale = Vector2( 0.343493, 0.161094 )
+texture = ExtResource( 13 )
+region_enabled = true
+region_rect = Rect2( 50.6354, 4277.27, 2039.65, 650.709 )
+
+[node name="Sprite2" type="Sprite" parent="train"]
+position = Vector2( 903, 374 )
+rotation = 1.5708
+scale = Vector2( 0.379758, 0.161094 )
+texture = ExtResource( 13 )
+region_enabled = true
+region_rect = Rect2( 50.6354, 4277.27, 2039.65, 650.709 )
+
+[node name="Node2D" type="Node2D" parent="train"]
+
+[node name="Path2D" type="Path2D" parent="train/Node2D"]
+curve = SubResource( 25 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="train/Node2D/Path2D"]
+position = Vector2( 904, 603 )
+rotation = 1.57415
+script = ExtResource( 21 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="train/Node2D/Path2D/PathFollow2D"]
+collision_layer = 32
+collision_mask = 6
+
+[node name="Sprite3" type="Sprite" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2( -2490.38, 0.369141 )
+scale = Vector2( 0.351564, 0.218689 )
+texture = ExtResource( 13 )
+region_enabled = true
+region_rect = Rect2( 2987.83, 1184.93, 2209.6, 496.397 )
+
+[node name="Sprite2" type="Sprite" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2( -1798.07, -0.709961 )
+scale = Vector2( 0.29141, 0.218556 )
+texture = ExtResource( 13 )
+region_enabled = true
+region_rect = Rect2( 33.2254, 569.388, 2228.3, 504.893 )
+
+[node name="Sprite" type="Sprite" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2( -1051.33, 2.00977 )
+rotation = -3.14159
+scale = Vector2( 0.324574, 0.227628 )
+texture = ExtResource( 13 )
+region_enabled = true
+region_rect = Rect2( 33.1809, 15.3006, 2690.45, 502.478 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2( -1746.05, 2.19635 )
+shape = SubResource( 26 )
+
+[node name="killzone" type="Area2D" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+script = ExtResource( 22 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D/killzone"]
+position = Vector2( -660.526, -0.151367 )
+shape = SubResource( 27 )
+
+[node name="Light2D" type="Light2D" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2( -304.683, 31.1233 )
+rotation = -1.5708
+scale = Vector2( 1.53661, 7.5916 )
+texture = ExtResource( 23 )
+texture_scale = 0.15
+color = Color( 0.803922, 1, 0.419608, 1 )
+energy = 2.0
+
+[node name="Light2D2" type="Light2D" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+position = Vector2( -313.836, -30.3395 )
+rotation = -1.5708
+scale = Vector2( 1.43954, 7.38282 )
+texture = ExtResource( 23 )
+texture_scale = 0.15
+color = Color( 0.803922, 1, 0.419608, 1 )
+energy = 2.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="train/Node2D/Path2D/PathFollow2D/StaticBody2D"]
+stream = ExtResource( 24 )
+volume_db = 4.952
+pitch_scale = 1.24
+max_distance = 3500.0
+
+[node name="sfx-voice" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 25 )
+
+[connection signal="timeout" from="RepairTimer" to="." method="_on_RepairTimer_timeout"]
+[connection signal="body_entered" from="train/Node2D/Path2D/PathFollow2D/StaticBody2D/killzone" to="train/Node2D/Path2D/PathFollow2D/StaticBody2D/killzone" method="_on_killzone_body_entered"]

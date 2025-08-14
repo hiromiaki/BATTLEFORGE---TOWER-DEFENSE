@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/271. Tanksshock Gameplay Music.mp3-a590ee15d4d6e921045b56ce54e2fc48.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/271. Tanksshock Gameplay Music.mp3"
+dest_files=[ "res://.import/271. Tanksshock Gameplay Music.mp3-a590ee15d4d6e921045b56ce54e2fc48.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

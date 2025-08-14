@@ -1,13 +1,13 @@
 extends KinematicBody2D
 
 # --- Stats ---
-export var max_health := 100
+export var max_health := 150
 var health := max_health
 export var fire_interval := 1.5
 export var speed := 80
 export var rotation_speed := 2.0
 export var body_turn_speed := 1.5
-export var attack_distance := 120.0  # 🆕 Minimum distance to keep from target when attacking
+export var attack_distance := 120.0  # 🆕 Shooting range
 
 # --- References ---
 var bullet_scene = preload("res://src/Bullet.tscn")
@@ -42,13 +42,15 @@ func _ready():
 		tower_ref = towers[0]
 
 func _process(delta):
-	# Attack enemy if nearby, else attack the tower
 	if is_instance_valid(enemy_ref):
-		_attack_target(enemy_ref, delta)
+		# Chase and shoot enemy units
+		_attack_target(enemy_ref, delta, true)
 	elif is_instance_valid(tower_ref):
-		_attack_target(tower_ref, delta)
+		# Always move toward tower, but only shoot if in range
+		var dist_to_tower = global_position.distance_to(tower_ref.global_position)
+		_attack_target(tower_ref, delta, dist_to_tower <= attack_distance)
 
-func _attack_target(target, delta):
+func _attack_target(target, delta, can_shoot: bool):
 	var dist_to_target = global_position.distance_to(target.global_position)
 	if dist_to_target > attack_distance:
 		_move_towards(target.global_position, delta)
@@ -56,7 +58,9 @@ func _attack_target(target, delta):
 		_stop_and_face(target, delta)
 
 	_smooth_aim_turret_at_target(delta, target)
-	_handle_shooting(delta)
+
+	if can_shoot:
+		_handle_shooting(delta)
 
 func _move_towards(target_pos, delta):
 	var direction = (target_pos - global_position).normalized()
@@ -65,7 +69,6 @@ func _move_towards(target_pos, delta):
 	move_and_slide(Vector2.RIGHT.rotated(rotation) * speed)
 
 func _stop_and_face(target, delta):
-	# Don't move, just rotate body toward target
 	var direction = (target.global_position - global_position).normalized()
 	var desired_angle = direction.angle()
 	rotation = lerp_angle(rotation, desired_angle, body_turn_speed * delta)
@@ -104,7 +107,7 @@ func show_muzzle_flash():
 
 # --- Detection ---
 func _on_DetectionArea_body_entered(body):
-	if body.is_in_group("enemy"):
+	if body.is_in_group("enemy") or body.is_in_group("enemytower"):
 		enemy_ref = body
 
 func _on_DetectionArea_body_exited(body):

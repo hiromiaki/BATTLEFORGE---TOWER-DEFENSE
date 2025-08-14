@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/214. Pinky Inaction.mp3-bb1f27cfbb60220e6972deca990882cf.mp3str"
+
+[deps]
+
+source_file="res://assets/sound/214. Pinky Inaction.mp3"
+dest_files=[ "res://.import/214. Pinky Inaction.mp3-bb1f27cfbb60220e6972deca990882cf.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
