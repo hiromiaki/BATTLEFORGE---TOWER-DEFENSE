@@ -122,8 +122,8 @@ margin_right = 367.0
 margin_bottom = 110.0
 custom_styles/fg = SubResource( 7 )
 custom_styles/bg = SubResource( 4 )
-max_value = 500.0
-value = 500.0
+max_value = 700.0
+value = 700.0
 percent_visible = false
 
 [connection signal="shop_opened" from="." to="." method="_on_ShopButton_pressed"]

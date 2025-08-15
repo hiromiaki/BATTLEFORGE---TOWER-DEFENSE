@@ -90,6 +90,7 @@ func _handle_shooting(delta):
 
 func _shoot_bullet():
 	var bullet = bullet_scene.instance()
+	$"shoot-sfx".play()
 	get_tree().current_scene.add_child(bullet)
 	bullet.global_position = muzzle.global_position
 	bullet.rotation = turret.global_rotation

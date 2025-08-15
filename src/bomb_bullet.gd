@@ -2,7 +2,7 @@ extends Area2D
 
 export var speed := 500
 export var life_time := 0.6
-export var damage := 100
+export var damage := 70
 var direction = Vector2.ZERO
 var exploding := false
 
@@ -43,6 +43,8 @@ func _trigger_explosion():
 		return
 	exploding = true
 	speed = 0
+	$bomb.visible = false
+	$explosion.visible = true
 	$CollisionShape2D.disabled = true
 	explosion.play("explode")
 	# Wait for the animation to finish before freeing

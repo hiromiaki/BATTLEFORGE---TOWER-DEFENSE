@@ -18,6 +18,7 @@ font_data = ExtResource( 4 )
 script = ExtResource( 5 )
 
 [node name="Panel" type="Panel" parent="."]
+self_modulate = Color( 0.733333, 0, 0, 0.701961 )
 margin_right = 1036.0
 margin_bottom = 610.0
 

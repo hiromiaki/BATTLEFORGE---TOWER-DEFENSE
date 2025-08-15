@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/EnemyTank.gd" type="Script" id=1]
 [ext_resource path="res://assets/Gun_03.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://assets/effects/Flash_B_02.png" type="Texture" id=17]
 [ext_resource path="res://assets/effects/Flash_B_03.png" type="Texture" id=18]
 [ext_resource path="res://assets/effects/light.jpg" type="Texture" id=19]
+[ext_resource path="res://assets/sound/072. Comet Boom.mp3" type="AudioStream" id=20]
 
 [sub_resource type="SpriteFrames" id=3]
 animations = [ {
@@ -133,6 +134,7 @@ visible = false
 position = Vector2( -62, -3 )
 
 [node name="shoot-sfx" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_DetectionArea_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_DetectionArea_body_exited"]

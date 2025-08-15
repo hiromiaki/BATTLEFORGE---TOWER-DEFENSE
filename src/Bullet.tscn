@@ -1,22 +1,28 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://assets/onlyObjects_default.png" type="Texture" id=1]
 [ext_resource path="res://src/Bullet.gd" type="Script" id=2]
-[ext_resource path="res://assets/effects/Explosion_A.png" type="Texture" id=3]
-[ext_resource path="res://assets/effects/Explosion_B.png" type="Texture" id=4]
-[ext_resource path="res://assets/effects/Explosion_G.png" type="Texture" id=5]
-[ext_resource path="res://assets/effects/Explosion_H.png" type="Texture" id=6]
-[ext_resource path="res://assets/effects/Explosion_C.png" type="Texture" id=7]
-[ext_resource path="res://assets/effects/Explosion_D.png" type="Texture" id=8]
-[ext_resource path="res://assets/effects/Explosion_E.png" type="Texture" id=9]
-[ext_resource path="res://assets/effects/Explosion_F.png" type="Texture" id=10]
+[ext_resource path="res://assets/effects/1_15.png" type="Texture" id=3]
+[ext_resource path="res://assets/effects/1_5.png" type="Texture" id=4]
+[ext_resource path="res://assets/effects/1_16.png" type="Texture" id=5]
+[ext_resource path="res://assets/effects/1_8.png" type="Texture" id=8]
+[ext_resource path="res://assets/effects/1_13.png" type="Texture" id=11]
+[ext_resource path="res://assets/effects/1_17.png" type="Texture" id=14]
+[ext_resource path="res://assets/effects/1_18.png" type="Texture" id=18]
+[ext_resource path="res://assets/effects/1_10.png" type="Texture" id=19]
+[ext_resource path="res://assets/effects/1_7.png" type="Texture" id=21]
+[ext_resource path="res://assets/effects/1_9.png" type="Texture" id=22]
+[ext_resource path="res://assets/effects/1_6.png" type="Texture" id=23]
+[ext_resource path="res://assets/effects/1_12.png" type="Texture" id=24]
+[ext_resource path="res://assets/effects/1_14.png" type="Texture" id=25]
+[ext_resource path="res://assets/effects/1_11.png" type="Texture" id=26]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 14.0
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
-"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 4 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 23 ), ExtResource( 21 ), ExtResource( 8 ), ExtResource( 22 ), ExtResource( 19 ), ExtResource( 26 ), ExtResource( 24 ), ExtResource( 11 ), ExtResource( 25 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 14 ), ExtResource( 18 ) ],
 "loop": true,
 "name": "explode",
 "speed": 5.0
@@ -41,5 +47,10 @@ shape = SubResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 visible = false
+position = Vector2( -1.90735e-06, -26 )
+scale = Vector2( 1.91, 1.7425 )
 frames = SubResource( 2 )
 animation = "explode"
+frame = 11
+speed_scale = 2.0
+playing = true

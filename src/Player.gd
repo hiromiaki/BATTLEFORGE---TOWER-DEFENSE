@@ -27,6 +27,7 @@ onready var muzzle_flash = $turret/muzzleFlash
 onready var track = $track
 onready var track_2 = $track2
 onready var health_ui = $"../HUD2"
+onready var main_ui = $"../HUD"
 onready var explosion = $explosion
 onready var smoke = $Smoke
 onready var screenfade_player = $"../HUD/ScreenFade/AnimationPlayer"

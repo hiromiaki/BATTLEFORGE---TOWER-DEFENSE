@@ -169,7 +169,7 @@ texture = ExtResource( 3 )
 position = Vector2( 675, 259 )
 scale = Vector2( 0.461914, 0.449707 )
 frames = SubResource( 6 )
-frame = 6
+frame = 3
 speed_scale = 3.0
 playing = true
 

@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 signal destroyed
-export var max_health := 500
+export var max_health := 700
 var current_health := max_health
 
 onready var screenfade_player = $"../HUD/ScreenFade/AnimationPlayer"

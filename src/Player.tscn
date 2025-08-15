@@ -40,7 +40,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 75, 44 )
+extents = Vector2( 74, 43.5 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
@@ -93,7 +93,7 @@ texture = ExtResource( 1 )
 region_rect = Rect2( 168.515, 129.365, 38.6974, 41.6869 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 16, 1 )
+position = Vector2( 15, 1.5 )
 shape = SubResource( 1 )
 
 [node name="turret" type="Sprite" parent="."]

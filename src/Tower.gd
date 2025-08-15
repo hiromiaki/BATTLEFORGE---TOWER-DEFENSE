@@ -1,6 +1,6 @@
 extends StaticBody2D
 
-export var max_health := 500
+export var max_health := 700
 var current_health := max_health
 
 signal tower_destroyed

@@ -15,7 +15,6 @@ onready var turret = $turret
 onready var muzzle = $turret/muzzle
 onready var detection_area = $DetectionArea
 onready var muzzle_flash = $turret/muzzleFlash
-onready var anim_player = $AnimationPlayer
 onready var track = $track
 onready var track2 = $track2
 onready var health_bar = $healthBar
@@ -92,17 +91,17 @@ func _shoot_bullet():
 		return
 	var bullet = bullet_scene.instance()
 	get_tree().current_scene.add_child(bullet)
+	$"shoot-sfx".play()
 	bullet.global_position = muzzle.global_position
 	bullet.rotation = turret.global_rotation
 	bullet.direction = turret.global_transform.x.normalized()
 
 	show_muzzle_flash()
-	if anim_player.has_animation("muzzle_flash"):
-		anim_player.play("muzzle_flash")
 
 func show_muzzle_flash():
 	muzzle_flash.visible = true
-	yield(get_tree().create_timer(0.1), "timeout")
+	muzzle_flash.play("explode")
+	yield(get_tree().create_timer(0.5), "timeout")
 	muzzle_flash.visible = false
 
 # --- Detection ---
